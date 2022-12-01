@@ -1,19 +1,27 @@
 from threading import Thread
 import socket
 import os
+#pip install psutil
+#import psutil
+import subprocess
 
-
-def Send(client, reponse):
+def Send(client,recep):
     while True:
-        msg = reponse.encode("utf-8")
+        msg = input()
+        msg = rep.encode("utf-8")
         client.send(msg)
+        
 def Reception(client):
     while True:
         requete_client = client.recv(500)
         requete_client = requete_client.decode('utf-8')
-        global reponse
-        reponse = os.popen(requete_client)
-        Send(client, reponse)
+        print(requete_client)
+        if requete_client=="bye":
+            client.close()
+        elif requete_client =="exit":
+            client.close()
+            socket.close()
+        
 
 Host = "localhost"
 Port = 6390
@@ -38,3 +46,4 @@ recep.join()
 
 client.close()
 socket.close()
+
